@@ -2,10 +2,10 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: pt-mono, Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;
 }
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -28,7 +28,6 @@ h1 {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     --fsAncillary: var(--use);
-    font-family: pt-mono,Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
     font-size: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -40,7 +39,6 @@ h1 {
     background-size: 100% 43px;
     -webkit-text-size-adjust: 100%;
     color: #4a4a4a;
-    font-family: museo-sans-rounded,sans-serif;
     font-weight: 500;
     line-height: 1.5;
     --vh: 5.51px;
@@ -53,6 +51,7 @@ h1 {
     position: relative;
     padding: 0 10px;
     transition: all .4s ease-out;
+    height: fit-content;
 }
 
 .word{
@@ -62,7 +61,6 @@ h1 {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     --fsAncillary: var(--use);
-    font-family: pt-mono,Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
     font-size: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -72,8 +70,7 @@ h1 {
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     --fsAncillary: var(--use);
-    font-family: pt-mono,Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
-    font-size: 20px;
+    font-size: 26px;
     text-align: center;
     border-bottom: 3px solid transparent;
     display: inline-block;
@@ -81,6 +78,7 @@ h1 {
     margin: 5px 2px 5px 0;
     min-width: 14px;
     position: relative;
+    font-weight: 500px;
 }
 
 .letter-active{
@@ -183,8 +181,10 @@ h1 {
     height: 400px;
     background-color: white;
     border-radius: 4px;
-    overflow: hidden;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    /* overflow: hidden; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    position: relative;
+    border: 1px solid #cacaca98;
 }
 .line{
     width: 100%;
@@ -247,4 +247,45 @@ h1 {
 }
 .settings .sound{
     cursor: pointer;
+}
+
+/* Tooltip styling */
+.tooltip {
+    display: inline-block; /* Hidden by default */
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1000;
+    text-align: center;
+    white-space: nowrap;
+    top: -100%;
+    right: -330%;
+}
+
+/* Show tooltip
+.tooltip-visible {
+    display: inline-block;
+} */
+
+/* Arrow pointing down */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Position at the bottom of the tooltip box */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent; /* Creates the arrow */
+}
+
+article{
+    padding: 20px;
+    margin-bottom: 30px;
+}
+article p{
+    margin: 5px 0;
 }
