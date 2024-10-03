@@ -1,4 +1,3 @@
-
 (async function mainFunction() {
     const response = await fetch('https://typingsprint.com/text');
     const text = await response.text();
@@ -140,6 +139,7 @@
             try {
                 document.getElementById('tooltip').style.display='none'
                 document.querySelector('.col-60').style.overflow = 'hidden'
+                document.querySelector('body').style.overflow = 'hidden'
             } catch (error) {
                 
             }
