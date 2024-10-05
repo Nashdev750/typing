@@ -1,12 +1,21 @@
 (async function mainFunction() {
-    const response = await fetch('https://typingsprint.com/text');
-    const text = await response.text();
+    // const response = await fetch('https://typingsprint.com/text');
+    // const text = await response.text();
+    const text = 'Valuable ores lay hidden beneath Death Valley. These treasures included gold and silver. When miners gave up on the goldfields in other parts of California, many came to the desert. Most mining settlements followed a predictable pattern. First came the prospectors. They searched for gold deposits. When they made a strike, they staked a claim. Then they either worked the claim themselves or sold it. Miners came to Death Valley for more than gold. Some came to mine a kind of salt. People used the salt to make'
     let strokes = 0
+    let duration = 60
     let lineEnds = []
     let position = 0
     let isContinue = true
     const testdiv = document.getElementById('test')
     document.addEventListener('keyup',trackTest)
+    document.querySelectorAll('.option').forEach(ele=>ele.addEventListener('click',updateDuration))
+
+    function updateDuration(e) {
+        duration = Number(this.dataset.min) * 60
+        document.querySelector('.selected').innerText = this.dataset.min+' min'
+        document.querySelector('.counter').innerText = '0'+this.dataset.min+':00'
+    }
     
     const startTest = ()=>{
           let index = 0
@@ -109,7 +118,8 @@
         return lineEnds.includes(index)
     }
     function trackTest(e) {
-        if(position==0) startCountdown(180)
+        e.preventDefault();
+        if(position==0) startCountdown()
         if(position >= text.length){
             
             return handleFinish()
@@ -127,11 +137,11 @@
             setActive(position, true)
             isContinue = true
         }else{
-            if(!isContinue) return handleShake(ltr)
-            playerror()
-            position++
-            setActive(position, false)
-            isContinue = false
+            // playerror()
+            return handleShake(ltr)
+            // position++
+            // setActive(position, false)
+            // isContinue = false
             // if (e.key.length === 1)
         }
         trackLines(position)
@@ -159,16 +169,15 @@
         // Get all letters inside the container
         const letters = document.querySelectorAll('.letter');
         if (letters.length === 0) return;
-        console.log(letters[0].offsetLeft)
         let lastOffsetLeft = letters[0].offsetLeft;
     
         // Iterate through each letter to find line breaks
         letters.forEach((letter, index) => {
             const currentOffsetLeft = letter.offsetLeft;
             if(currentOffsetLeft==lastOffsetLeft && index != 0){
-                const line = document.createElement('div')
-                line.classList.add('line')
-                testdiv.insertBefore(line, letter.parentNode)
+                // const line = document.createElement('div')
+                // line.classList.add('line')
+                // testdiv.insertBefore(line, letter.parentNode)
                 if(!lineEnds.includes(index-1))lineEnds.push(index-1)
             }
         });
@@ -182,12 +191,9 @@
             lines++
          }
          if(lineEnds.includes(index-1) || back){
-            const letters = document.querySelectorAll('.letter');
             const testdiv = document.getElementById('test')
             const translateY = -(lines * testdiv.offsetHeight/(lineEnds.length+1));
             testdiv.style.transform = `translateY(${translateY}px)`;
-            console.log('lines ',translateY, testdiv.offsetHeight)
-            console.log(lineEnds)
          }
     }
     
@@ -199,10 +205,8 @@
         const letters = document.querySelectorAll('.letter');
         const words = Math.floor(Number(letters[position].dataset.word)/3)
         const accuracy = correct/strokes * 100
-        testdiv.style.transform = `translateY(${0}px)`;
-        document.querySelector('.modal').classList.add('show')
-        document.getElementById('speed').innerText = words+' W/M'
-        document.getElementById('accuracy').innerText = accuracy.toFixed(2)+'%'
+        const results = getResults(Math.floor(accuracy),strokes - position, words)
+        document.getElementById('test-content').innerHTML = results
     }
     
     function formatTime(seconds) {
@@ -213,9 +217,9 @@
     
     
     // Countdown function
-    function startCountdown(duration) {
+    function startCountdown() {
         let timeRemaining = duration;
-        const counterElement = document.querySelector('.counter strong');
+        const counterElement = document.querySelector('.counter');
         if (timeRemaining > 0) {
             timeRemaining--; // Decrease time by 1 second
             counterElement.textContent = formatTime(timeRemaining);
@@ -243,3 +247,33 @@
 
 })()
 
+function getResults(accuracy,mistakes,speed) {
+    return `<div class="row">
+    <div class="results">
+        <div class="result">
+            <h4>Accuracy</h4>
+            <div>
+                <span>${accuracy} <small>%</small></span>
+            </div>
+        </div>
+        <div class="result">
+            <h4>Mistakes</h4>
+            <div>
+                <span>${mistakes}</span>
+            </div>
+        </div>
+        <div class="result">
+            <h4>Speed</h4>
+            <div>
+                <span>${speed} <small>Words/Min</small></span>
+            </div>
+        </div>
+    </div>
+    <div class="try-again">
+        <a href="/typing-test"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+          </svg> Try again</a>
+    </div>
+</div>`
+}

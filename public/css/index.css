@@ -1,0 +1,26 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(255 255 255/var(--tw-bg-opacity))!important;;
+}
+.navbar{
+    background-color: white !important;
+}
+.nav-link{
+    font-family: Manrope,sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.w-full{
+    width: 90%;
+}
+.hero{
+    height: 50vh;
+}
+.hero img{
+  object-fit: cover;
+  object-position: center;
+width: 60%;
+}

@@ -1,0 +1,62 @@
+<%- include('partials/navbar') %>
+<head>
+
+</head>
+
+<div class="row gradient" id="test-content">
+    <div class="col-4  p-4">
+        
+    </div>
+    <div class="col-8 p-4">
+        <div class="card" style="border: none;">
+            <div class="row">
+                <div class="col-2">
+                    <img src="/images/ms-lightning-dark.svg" alt="">
+                </div>
+                <div class="col-10">
+                    <h1>Typing</h1>
+                    <div class="info">
+                        <p>Take a </p>
+                         <div class="dropdown">
+                            <span class="selected"> 1 min </span>
+                            <div class="options">
+                                <div class="option" data-min = '1'>1 min</div>
+                                <div class="option" data-min = '2'>2 min</div>
+                                <div class="option" data-min = '3'>3 min</div>
+                                <div class="option" data-min = '5'>5 min</div>
+                            </div>
+                         </div>
+                        <p> test and clarify your typing speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="test-card mt-2 px-4">
+            <div id="test"></div>
+            <div class="setting d-flex">
+                <a href="/typing-test">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                      </svg>
+                    </a>
+                <div class="counter">01:00</div>
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders2-vertical" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 10.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1H3V1.5a.5.5 0 0 0-1 0V10H.5a.5.5 0 0 0-.5.5M2.5 12a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5m3-6.5A.5.5 0 0 0 6 6h1.5v8.5a.5.5 0 0 0 1 0V6H10a.5.5 0 0 0 0-1H6a.5.5 0 0 0-.5.5M8 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2A.5.5 0 0 0 8 1m3 9.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1H14V1.5a.5.5 0 0 0-1 0V10h-1.5a.5.5 0 0 0-.5.5m2.5 1.5a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5"/>
+                      </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+<%- include('partials/footer') %>
