@@ -1,7 +1,7 @@
 (async function mainFunction() {
-    // const response = await fetch('https://typingsprint.com/text');
-    // const text = await response.text();
-    const text = 'Valuable ores lay hidden beneath Death Valley. These treasures included gold and silver. When miners gave up on the goldfields in other parts of California, many came to the desert. Most mining settlements followed a predictable pattern. First came the prospectors. They searched for gold deposits. When they made a strike, they staked a claim. Then they either worked the claim themselves or sold it. Miners came to Death Valley for more than gold. Some came to mine a kind of salt. People used the salt to make'
+    const response = await fetch('https://typingsprint.com/text');
+    const text = await response.text();
+    
     let strokes = 0
     let duration = 60
     let lineEnds = []
