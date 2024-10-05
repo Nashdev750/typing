@@ -1,5 +1,5 @@
 (async function mainFunction() {
-    const response = await fetch('https://typingsprint.com/text');
+    const response = await fetch('/text');
     const text = await response.text();
     
     let strokes = 0
