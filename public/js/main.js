@@ -203,7 +203,7 @@
         const correct = document.querySelectorAll('.is-correct').length
         const wrong = document.querySelectorAll('.is-wrong').length
         const letters = document.querySelectorAll('.letter');
-        const words = Math.floor(Number(letters[position].dataset.word)/3)
+        const words = Math.floor(Number(letters[position].dataset.word)/(duration/60))
         const accuracy = correct/strokes * 100
         const results = getResults(Math.floor(accuracy),strokes - position, words)
         document.getElementById('test-content').innerHTML = results
