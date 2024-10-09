@@ -1,4 +1,6 @@
 // app.js
+const { SitemapStream, streamToPromise } = require('sitemap');
+const { Readable } = require('stream');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -38,6 +40,30 @@ app.get('/text', (req, res) => {
         res.send(data);
     });
 });
+
+app.get('/sitemap.xml', async (req, res, next) => {
+    try {
+      // Define static URLs to include in the sitemap
+      const links = [
+        { url: '/', changefreq: 'monthly', priority: 1.0 },
+        { url: '/typing-test', changefreq: 'monthly', priority: 0.8 }
+      ];
+  
+      // Create a stream for the sitemap
+      const stream = new SitemapStream({ hostname: 'https://typingsprint.com' });
+  
+      // Convert the stream into a promise and send the sitemap XML as a response
+      const xml = await streamToPromise(Readable.from(links).pipe(stream)).then(data => data.toString());
+  
+      // Send the sitemap
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+
 // Start the server
 const PORT = 4001;
 app.listen(PORT, () => {

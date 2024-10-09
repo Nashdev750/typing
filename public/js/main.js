@@ -1,3 +1,5 @@
+new Audio('/js/key.mp3');
+new Audio('/js/key.mp3');
 (async function mainFunction() {
     const response = await fetch('/text');
     const text = await response.text();
