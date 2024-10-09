@@ -5,11 +5,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
-
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const app = express();
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
+app.use(helmet());
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again after 15 minutes'
+  });
+  
+app.use(limiter);
 
 // Parse URL-encoded bodies (for form data)
 app.use(bodyParser.urlencoded({ extended: true }));
