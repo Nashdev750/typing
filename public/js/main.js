@@ -1,5 +1,5 @@
 new Audio('/js/key.mp3');
-new Audio('/js/key.mp3');
+new Audio('/js/error.mp3');
 (async function mainFunction() {
     const response = await fetch('/text');
     const text = await response.text();
@@ -222,10 +222,7 @@ new Audio('/js/key.mp3');
     function startCountdown() {
         let timeRemaining = duration;
         const counterElement = document.querySelector('.counter');
-        if (timeRemaining > 0) {
-            timeRemaining--; // Decrease time by 1 second
-            counterElement.textContent = formatTime(timeRemaining);
-        }
+      
         
         const intervalId = setInterval(() => {
             if (timeRemaining > 0) {
@@ -239,7 +236,7 @@ new Audio('/js/key.mp3');
     }
     
     function playerror() {
-        const audio = new Audio('/js/key.mp3');
+        const audio = new Audio('/js/error.mp3');
         audio.play();
     }
     function playkey() {
