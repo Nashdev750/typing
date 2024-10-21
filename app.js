@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+const { google } = require('googleapis');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const app = express();
@@ -17,7 +18,7 @@ const limiter = rateLimit({
     max: 100, // Limit each IP to 100 requests per windowMs
     message: 'Too many requests from this IP, please try again after 15 minutes'
   });
-  
+app.use(express.json())  
 app.use(limiter);
 
 // Parse URL-encoded bodies (for form data)
@@ -73,6 +74,57 @@ app.get('/sitemap.xml', async (req, res, next) => {
   });
 
 
+
+
+
+
+const CREDENTIALS_PATH = path.join(__dirname, 'auth.json');
+
+// Define the scope for accessing Google Sheets
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+
+// Authenticate using the Service Account credentials
+function authenticate() {
+    const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH, 'utf8'));
+
+    const auth = new google.auth.GoogleAuth({
+        credentials,
+        scopes: SCOPES,
+    });
+
+    return auth;
+}
+
+
+
+app.post('/row',async (req, res)=>{
+  try {
+    const auth = authenticate();
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    // Specify the ID of your Google Sheet
+    const spreadsheetId = '1EH1NRipRG3QYSqdQcfsqXz81P506QZb-RqqtxY8nPb0';  // Replace with your actual spreadsheet ID
+    const range = 'RoutePlan';  // Adjust the range accordingly
+
+    // Define the new row values
+    const values = [req.body.row];
+    // Define the request body for appending the row
+    const resource = {
+        values,
+    };
+
+    sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range,
+        valueInputOption: 'RAW',
+        resource,
+    });
+    res.send({success:true})
+} catch (err) {
+    console.error('Error adding row:', err.message);
+    res.status(500).send({error:err.message})
+}
+})
 // Start the server
 const PORT = 4001;
 app.listen(PORT, () => {
