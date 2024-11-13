@@ -85,7 +85,8 @@ app.get('/sitemap.xml', async (req, res, next) => {
       // Define static URLs to include in the sitemap
       const links = [
         { url: '/', changefreq: 'monthly', priority: 1.0 },
-        { url: '/typing-test', changefreq: 'monthly', priority: 0.8 }
+        { url: '/typing-test', changefreq: 'monthly', priority: 0.8 },
+        { url: '/rice-purity-test', changefreq: 'monthly', priority: 0.8 }
       ];
   
       // Create a stream for the sitemap
