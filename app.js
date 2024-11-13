@@ -12,7 +12,12 @@ const app = express();
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://code.jquery.com","https://cdn.jsdelivr.net"], 
+    },
+  }));
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // Limit each IP to 100 requests per windowMs
@@ -30,14 +35,38 @@ app.use(express.static('public'));
 // Routes
 app.get('/', (req,res)=>{
     res.render('index');
-});;
+});
 app.get('/typing-test', (req,res)=>{
     res.render('typing-test');
+});
+app.get('/rice-purity-test', (req,res)=>{
+    const filePath = path.join(__dirname, `rice.txt`);
+    const logEntry = `[${new Date().toISOString()}] Rice Purity Test accessed from IP: ${req.ip}\n`;
+    fs.appendFile(filePath, logEntry, err => {
+        if (err) console.error('Error writing to log file:', err);
+    });
+    res.render('rice-purity-test');
 });
 app.get('/text', (req, res) => {
     // Generate a random number between 1 and 10 to pick a random text file
     const randomFileNumber = Math.floor(Math.random() * 10) + 1;
     const filePath = path.join(__dirname, `text${randomFileNumber}.txt`);
+
+    // Read the content of the randomly selected text file
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).send('An error occurred while reading the file');
+        }
+
+        // Send the file content as the response
+        res.send(data);
+    });
+});
+app.get('/log', (req, res) => {
+    // Generate a random number between 1 and 10 to pick a random text file
+    const randomFileNumber = Math.floor(Math.random() * 10) + 1;
+    const filePath = path.join(__dirname, `rice.txt`);
 
     // Read the content of the randomly selected text file
     fs.readFile(filePath, 'utf8', (err, data) => {
