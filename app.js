@@ -47,6 +47,9 @@ app.get('/rice-purity-test', (req,res)=>{
     });
     res.render('rice-purity-test');
 });
+app.get('/rice-purity-test-iframe', (req,res)=>{
+    res.render('rice-purity-test-iframe');
+});
 app.get('/text', (req, res) => {
     // Generate a random number between 1 and 10 to pick a random text file
     const randomFileNumber = Math.floor(Math.random() * 10) + 1;

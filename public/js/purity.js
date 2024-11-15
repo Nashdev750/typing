@@ -45,6 +45,7 @@
             // Shows the score and hides the checks
             $("#toShow").show();
             $("#toHide").hide();
+            window.location.href = '#scoretop'
         });
         
         // On click of the reset button: 
