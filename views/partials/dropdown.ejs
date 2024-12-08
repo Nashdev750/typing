@@ -1,0 +1,22 @@
+<div class="relative dropdown-container" data-value="<%= value %>">
+    <button
+      class="dropdown-toggle hover:text-[#d1d0c5] transition-colors flex items-center gap-2"
+    >
+      <% if (icon) { %>
+        <i class="bi <%= icon %>"></i>
+      <% } %>
+      <span class="dropdown-value"><%= value %></span>
+      <i class="bi bi-chevron-down w-4 h-4"></i>
+    </button>
+  
+    <div class="absolute top-full left-0 mt-2 w-48 bg-[#2c2e31] rounded-lg shadow-lg py-1 z-50 dropdown-menu hidden">
+      <% options.forEach(function(option) { %>
+        <button
+          class="dropdown-option w-full text-left px-4 py-2 text-[#646669] hover:text-[#d1d0c5] hover:bg-[#363739] transition-colors"
+          data-value="<%= option %>"
+        >
+          <%= option %>
+        </button>
+      <% }); %>
+    </div>
+  </div>

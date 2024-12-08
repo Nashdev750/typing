@@ -78,7 +78,7 @@ app.get('/sitemap.xml', async (req, res, next) => {
 
 
 
-const CREDENTIALS_PATH = path.join(__dirname, 'auth.json');
+const CREDENTIALS_PATH = path.join(__dirname, 'auth2.json');
 
 // Define the scope for accessing Google Sheets
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -105,6 +105,37 @@ app.post('/row',async (req, res)=>{
     // Specify the ID of your Google Sheet
     const spreadsheetId = '1EH1NRipRG3QYSqdQcfsqXz81P506QZb-RqqtxY8nPb0';  // Replace with your actual spreadsheet ID
     const range = 'RoutePlan';  // Adjust the range accordingly
+
+    // Define the new row values
+    const values = [req.body.row];
+    // Define the request body for appending the row
+    const resource = {
+        values,
+    };
+
+    sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range,
+        valueInputOption: 'RAW',
+        resource,
+    });
+    res.send({success:true})
+} catch (err) {
+    console.error('Error adding row:', err.message);
+    res.status(500).send({error:err.message})
+}
+})
+
+app.post('/api/submit',async (req, res)=>{
+  try {
+    fs.appendFileSync('data.json', JSON.stringify(req.body));
+
+    const auth = authenticate();
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    // Specify the ID of your Google Sheet
+    const spreadsheetId = '12hUPGeqn0lCaKOcTcJRy26y-2ydKjkg5E-8IlXk9Iqs';  // Replace with your actual spreadsheet ID
+    const range = 'KHÁCH TỪ WEBSITE';  // Adjust the range accordingly
 
     // Define the new row values
     const values = [req.body.row];
